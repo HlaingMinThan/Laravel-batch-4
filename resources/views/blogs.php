@@ -6,12 +6,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="/style.css">
-</head <body>
-<div class="container">
-    <?php foreach ($blogs as $blog) : ?>
-        <?= $blog; ?>
-    <?php endforeach; ?>
-</div>
+</head>
+
+<body>
+    <div class="container">
+        <h1>All Blogs</h1>
+
+        <?php foreach ($blogs as $blog) : ?>
+            <?= $blog ?>
+        <?php endforeach; ?>
+    </div>
 </body>
 
 </html>
