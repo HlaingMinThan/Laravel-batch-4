@@ -9,8 +9,8 @@ Route::get('', function () {
     ]);
 });
 
-Route::get('/blogs/{filename}', function ($filename) {
+Route::get('/blogs/{slug}', function ($slug) {
     return view('blog-detail', [
-        'blog' =>   Blog::find($filename)
+        'blog' =>   Blog::findOrFail($slug)
     ]);
 });
