@@ -9,8 +9,8 @@ Route::get('/', function () {
     ]);
 });
 
-Route::get('/blogs/{slug}', function ($slug) {
+Route::get('/blogs/{blog:slug}', function (Blog $blog) {
     return view('blog-detail', [
-        'blog' => Blog::where('slug', $slug)->first()
+        'blog' => $blog
     ]);
 });
