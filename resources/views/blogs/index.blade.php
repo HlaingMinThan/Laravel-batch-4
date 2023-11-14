@@ -1,4 +1,5 @@
 <x-layout>
+    <x-category />
     <div class="container">
         <form action="/">
             <input
@@ -17,5 +18,7 @@
         @empty
         <p>no blogs found.</p>
         @endforelse
+
+        {{$blogs->links()}}
     </div>
 </x-layout>

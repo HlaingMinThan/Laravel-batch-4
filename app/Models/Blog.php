@@ -14,6 +14,13 @@ class Blog extends Model
         return $this->belongsTo(Category::class, 'cat_id');
     }
 
+    public function scopeFilter($query, $searchValue)
+    {
+        if ($searchValue) {
+            $query->where('title', 'Like', '%' . $searchValue . '%');
+        }
+    }
+
     public function author() //user_id
     {
         return $this->belongsTo(User::class, 'user_id');
