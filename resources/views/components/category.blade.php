@@ -11,7 +11,7 @@
         @foreach ($categories as $category)
         <li><a
                 class="dropdown-item"
-                href="/categories/{{$category->slug}}"
+                href="/?category={{$category->slug}}{{request('search') ? '&search='.request('search') : '' }}"
             >{{$category->name}}</a></li>
         @endforeach
     </ul>

@@ -14,10 +14,25 @@ class Blog extends Model
         return $this->belongsTo(Category::class, 'cat_id');
     }
 
-    public function scopeFilter($query, $searchValue)
+    public function scopeFilter($query, $filters)
     {
-        if ($searchValue) {
-            $query->where('title', 'Like', '%' . $searchValue . '%');
+        if ($filters['search'] ?? null) {
+            $query
+                ->where(function ($query) use ($filters) {
+                    $query
+                        ->where('title', 'Like', '%' . $filters['search'] . '%')
+                        ->orWhere('body', 'Like', '%' . $filters['search'] . '%');
+                });
+        }
+        if ($filters['category'] ?? null) {
+            $query->whereHas('category', function ($catQuery) use ($filters) {
+                $catQuery->where('slug', $filters['category']);
+            });
+        }
+        if ($filters['author'] ?? null) {
+            $query->whereHas('author', function ($userQuery) use ($filters) {
+                $userQuery->where('username', $filters['author']);
+            });
         }
     }
 

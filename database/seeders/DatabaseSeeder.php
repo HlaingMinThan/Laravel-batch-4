@@ -16,12 +16,10 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(100)
-            ->has(
-                Blog::factory(3)
-            )
-            ->create();
+        $frontend = Category::factory()->create(['name' => 'frontend', 'slug' => 'frontend']);
+        $backend = Category::factory()->create(['name' => 'backend', 'slug' => 'backend']);
 
-        // Category::factory(10)->create(); // -> categoies 10
+        Blog::factory(10)->create(['cat_id' => $frontend->id]);
+        Blog::factory(10)->create(['cat_id' => $backend->id]);
     }
 }
