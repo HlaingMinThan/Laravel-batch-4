@@ -1,29 +1,5 @@
 <x-layout>
-    <x-category />
-    <div class="container">
-        <form action="/">
-            <input
-                value="{{request('category')}}"
-                name="category"
-                type="hidden"
-            >
-            <input
-                value="{{request('search')}}"
-                name="search"
-                type="text"
-                placeholder="search here...."
-            >
-            <button type="submit">search</button>
-        </form>
-        @forelse ($blogs as $blog)
-        <h1><a href="/blogs/{{$blog->slug}}">{{$blog->title}}</a></h1>
-        <p>{{substr($blog->body,0,100)}}...</p>
-        <p>Category - <a href="/?category={{$blog->category->slug}}">{{$blog->category->name}}</a></p>
-        <p>User - <a href="/?author={{$blog->author->username}}">{{$blog->author->name}}</a> </a></p>
-        @empty
-        <p>no blogs found.</p>
-        @endforelse
-
-        {{$blogs->links()}}
-    </div>
+    <x-hero />
+    <x-blogs-section :blogs="$blogs" />
+    <x-subscribe />
 </x-layout>
