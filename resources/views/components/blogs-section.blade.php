@@ -7,10 +7,7 @@
     <div class="">
         <x-category />
     </div>
-    <form
-        action=""
-        class="my-3"
-    >
+    <form class="my-3">
         <div class="input-group mb-3">
             @if(request('category'))
             <input
