@@ -30,6 +30,9 @@ class RegisterController extends Controller
         $user->password = $cleanData['password'];
         $user->save();
 
-        return redirect('/');
+        //login
+        auth()->login($user);
+
+        return redirect('/')->with('message', 'Welcome ' . $user->name);
     }
 }
