@@ -20,8 +20,44 @@
                 </p>
             </div>
         </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="my-3">
+                    <form
+                        action="/blogs/{{$blog->slug}}/comments"
+                        method="POST"
+                    >
+                        @csrf
+                        <textarea
+                            placeholder="comment here..."
+                            class="form-control"
+                            name="body"
+                            id=""
+                            cols="30"
+                            rows="10"
+                        ></textarea>
+                        <button
+                            class="mt-3 btn btn-primary"
+                            type="submit"
+                        >Comment</button>
+                    </form>
+                </div>
+                @foreach($blog->comments()->with('user')->orderby('id','desc')->get() as $comment)
+                <div>
+                    <h3>
+                        {{$comment->user->name}}
+                    </h3>
+                    <p>
+                        {{$comment->body}}
+                    </p>
+                    <p>commented at - {{$comment->created_at->diffForHumans()}}</p>
+                </div>
+                @endforeach
+            </div>
+        </div>
+
     </div>
 
-    <x-subscribe />
     <x-blogs_you_may_like_section :randomBlogs="$randomBlogs" />
 </x-layout>
