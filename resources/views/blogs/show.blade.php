@@ -52,6 +52,28 @@
                         {{$comment->body}}
                     </p>
                     <p>commented at - {{$comment->created_at->diffForHumans()}}</p>
+                    <div class="d-flex">
+                        <a
+                            href="/comments/{{$comment->id}}/edit"
+                            class="btn btn-warning mx-2"
+                            type="submit"
+                        >
+                            edit
+                        </a>
+                        <form
+                            action="/comments/{{$comment->id}}"
+                            method="POST"
+                        >
+                            @csrf
+                            @method('delete')
+                            <button
+                                class="btn btn-danger"
+                                type="submit"
+                            >
+                                delete
+                            </button>
+                        </form>
+                    </div>
                 </div>
                 @endforeach
             </div>

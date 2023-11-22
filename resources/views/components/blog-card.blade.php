@@ -23,7 +23,7 @@
             {{$blog->intro}}
         </p>
         <a
-            href="/blogs/{{$blog->slug}}"
+            href="{{route('blogs.show',$blog->slug)}}"
             class="btn btn-primary"
         >Read More</a>
     </div>

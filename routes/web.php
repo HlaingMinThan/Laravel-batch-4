@@ -10,9 +10,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(MustBeAuthUser::class)->group(function () {
     Route::get('/', [BlogController::class, 'index']);
-    Route::get('/blogs/{blog:slug}', [BlogController::class, 'show']);
+    Route::get('/blogs/{blog:slug}', [BlogController::class, 'show'])->name('blogs.show');
     Route::post('/blogs/{blog:slug}/comments', [CommentController::class, 'store']);
     Route::post('/logout', [LogoutController::class, 'destroy']);
+    Route::get('/comments/{comment}/edit', [CommentController::class, 'edit']);
+    Route::patch('/comments/{comment}/update', [CommentController::class, 'update']);
+    Route::delete('/comments/{comment}', [CommentController::class, 'destroy']);
 });
 
 Route::middleware('guest-user')->group(function () {
@@ -22,11 +25,11 @@ Route::middleware('guest-user')->group(function () {
     Route::post('/register', [RegisterController::class, 'store']);
 });
 
-//              method      view
-// list ->      index     blogs.index
-// single ->    show     blogs.show
-// create ->   create   blogs.create
-// store ->   store     -(db save -> redirect)
-// edit ->    edit      blogs.edit
-// update -> update - (db update -> redirect)
-// destroy -> destroy - (db destroy -> redirect)
+//              method      view                        HTTP
+// list ->      index     blogs.index                   GET
+// single ->    show     blogs.show                     GET
+// create ->   create   blogs.create                    GET
+// store ->   store     -(db save -> redirect)          POST
+// edit ->    edit      blogs.edit                      GET
+// update -> update - (db update -> redirect)           PATCH/PUT
+// destroy -> destroy - (db destroy -> redirect)        delete

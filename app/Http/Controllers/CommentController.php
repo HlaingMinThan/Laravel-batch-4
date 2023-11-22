@@ -21,4 +21,30 @@ class CommentController extends Controller
 
         return back();
     }
+
+    public function edit(Comment $comment)
+    {
+        return view('comments.edit', [
+            'comment' => $comment
+        ]);
+    }
+
+    public function update(Comment $comment)
+    {
+
+        request()->validate([
+            'body' => ['required']
+        ]);
+
+        $comment->body = request('body');
+        $comment->save();
+
+        return redirect()->route('blogs.show', $comment->blog->slug);
+    }
+
+    public function destroy(Comment $comment)
+    {
+        $comment->delete();
+        return back();
+    }
 }
