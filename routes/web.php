@@ -5,6 +5,7 @@ use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\LogoutController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\SubscriptionController;
 use App\Http\Middleware\MustBeAuthUser;
 use Illuminate\Support\Facades\Route;
 
@@ -12,6 +13,7 @@ Route::middleware(MustBeAuthUser::class)->group(function () {
     Route::get('/', [BlogController::class, 'index']);
     Route::get('/blogs/{blog:slug}', [BlogController::class, 'show'])->name('blogs.show');
     Route::post('/blogs/{blog:slug}/comments', [CommentController::class, 'store']);
+    Route::post('/blogs/{blog:slug}/handle-subscriptions', [SubscriptionController::class, 'toggle']);
     Route::post('/logout', [LogoutController::class, 'destroy']);
     Route::get('/comments/{comment}/edit', [CommentController::class, 'edit']);
     Route::patch('/comments/{comment}/update', [CommentController::class, 'update']);

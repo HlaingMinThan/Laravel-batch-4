@@ -45,4 +45,14 @@ class Blog extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function subscribedUsers()
+    {
+        return $this->belongsToMany(User::class, 'blogs_users');
+    }
+
+    public function isSubscribedBy($user)
+    {
+        return $this->subscribedUsers->contains('id', $user->id);
+    }
 }

@@ -14,6 +14,25 @@
                     <div><a href="/categories/{{$blog->category->slug}}"><span
                                 class="badge bg-primary">{{$blog->category->name}}</span></a></div>
                     <div class="text-secondary">{{$blog->created_at->diffForHumans()}}</div>
+                    <div>
+                        <form
+                            action="/blogs/{{$blog->slug}}/handle-subscriptions"
+                            method="POST"
+                        >
+                            @csrf
+                            @if ($blog->isSubscribedBy(auth()->user()))
+                            <button
+                                type="submit"
+                                class="btn btn-danger"
+                            >unsubscribe</button>
+                            @else
+                            <button
+                                type="submit"
+                                class="btn btn-warning"
+                            >subscribe</button>
+                            @endif
+                        </form>
+                    </div>
                 </div>
                 <p class="lh-md mt-3">
                     {{$blog->body}}
