@@ -9,6 +9,16 @@ class Blog extends Model
 {
     use HasFactory;
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleted(function ($item) {
+            $item->comments()->delete();
+            $item->subscribedUsers()->detach();
+        });
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'cat_id');
