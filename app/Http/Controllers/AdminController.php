@@ -6,6 +6,7 @@ use App\Http\Requests\BlogFormRequest;
 use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
@@ -29,8 +30,8 @@ class AdminController extends Controller
     {
         $cleanData = $request->validated();
         $cleanData['user_id'] = auth()->id();
+        $cleanData['photo'] = '/storage/' . request('photo')->store('/blogs');
         Blog::create($cleanData);
-
         return redirect('/admin');
     }
 
@@ -44,6 +45,12 @@ class AdminController extends Controller
     public function update(Blog $blog, BlogFormRequest $request)
     {
         $cleanData = $request->validated();
+
+        if (request('photo')) {
+            $cleanData['photo'] = '/storage/' . request('photo')->store('/blogs');
+            File::delete(public_path($blog->photo));
+        }
+
         $blog->update($cleanData);
         return redirect('/admin');
     }

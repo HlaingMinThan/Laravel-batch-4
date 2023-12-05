@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 
 class Blog extends Model
 {
@@ -16,6 +17,7 @@ class Blog extends Model
         static::deleted(function ($item) {
             $item->comments()->delete();
             $item->subscribedUsers()->detach();
+            File::delete(public_path($item->photo));
         });
     }
 

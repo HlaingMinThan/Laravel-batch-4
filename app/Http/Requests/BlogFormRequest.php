@@ -22,10 +22,12 @@ class BlogFormRequest extends FormRequest
      */
     public function rules(): array
     {
+        $isEdit =  str_contains(request()->route()->uri(), 'update');
         return [
             "title" => ['required'],
             "slug" => ['required'],
             "body" => ['required'],
+            "photo" => [!$isEdit ? 'required' : 'nullable', 'image'],
             "cat_id" => ['required', Rule::exists('categories', 'id')],
         ];
     }
