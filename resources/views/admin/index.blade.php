@@ -20,10 +20,15 @@
                 <td>{{$blog->title}}</td>
                 <td>{{$blog->slug}}</td>
                 <td>{{$blog->category->name}}</td>
+                @if (auth()->user()->can('edit',$blog))
                 <td><a
                         href="/admin/blogs/{{$blog->id}}/edit"
                         class="btn btn-link btn-warning"
                     >Edit</a></td>
+                @endif
+
+
+                @if (auth()->user()->can('delete',$blog))
                 <td>
                     <form
                         action="/admin/blogs/{{$blog->id}}/destroy"
@@ -37,6 +42,8 @@
                         >Delete</button>
                     </form>
                 </td>
+                @endif
+
             </tr>
             @endforeach
 

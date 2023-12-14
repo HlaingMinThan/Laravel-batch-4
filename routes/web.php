@@ -27,8 +27,11 @@ Route::middleware(MustBeAdminUser::class)->group(function () {
     Route::get('/admin/blogs/create', [AdminController::class, 'create']);
     Route::post('/admin/blogs/store', [AdminController::class, 'store']);
     Route::get('/admin/blogs/{blog}/edit', [AdminController::class, 'edit']);
+    // ->middleware('can:edit,blog');
     Route::put('/admin/blogs/{blog}/update', [AdminController::class, 'update']);
+    // ->middleware('can:edit,blog');
     Route::delete('/admin/blogs/{blog}/destroy', [AdminController::class, 'destroy']);
+    // ->middleware('can:edit,blog');
 });
 
 Route::middleware('guest-user')->group(function () {

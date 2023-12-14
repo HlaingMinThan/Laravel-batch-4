@@ -7,6 +7,7 @@ use App\Models\Blog;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Validation\Rule;
 
 class AdminController extends Controller
@@ -14,7 +15,7 @@ class AdminController extends Controller
     public function index()
     {
         return view('admin.index', [
-            'blogs' => Blog::with('category')->latest()->paginate(5) //15
+            'blogs' => auth()->user()->blogs()->latest()->paginate(5) //15
         ]);
     }
 
@@ -37,6 +38,7 @@ class AdminController extends Controller
 
     public function edit(Blog $blog)
     {
+        $this->authorize('edit', $blog);
         return view('admin.edit', [
             'categories' => Category::all(),
             'blog' => $blog
